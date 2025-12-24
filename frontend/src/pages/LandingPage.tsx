@@ -192,7 +192,7 @@ export default function LandingPage() {
                 variants={buttonVariants}
                 whileHover="hover"
                 whileTap="tap"
-                onClick={() => navigate('/app/upload')}
+                onClick={() => navigate('/sign-up')}
                 className="px-10 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold text-lg shadow-xl"
               >
                 Get Started
