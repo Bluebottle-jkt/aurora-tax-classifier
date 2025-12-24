@@ -1,0 +1,38 @@
+{"text": "gaji karyawan", "label": "PPh21"}
+{"text": "salary pegawai bulanan", "label": "PPh21"}
+{"text": "tunjangan hari raya THR", "label": "PPh21"}
+{"text": "bonus karyawan", "label": "PPh21"}
+{"text": "upah tenaga kerja", "label": "PPh21"}
+{"text": "pembayaran impor barang", "label": "PPh22"}
+{"text": "pembelian barang pemerintah", "label": "PPh22"}
+{"text": "bunga deposito bank", "label": "PPh23_Bunga"}
+{"text": "bunga pinjaman", "label": "PPh23_Bunga"}
+{"text": "dividen saham", "label": "PPh23_Dividen"}
+{"text": "pembagian dividen", "label": "PPh23_Dividen"}
+{"text": "hadiah undian", "label": "PPh23_Hadiah"}
+{"text": "hadiah lomba", "label": "PPh23_Hadiah"}
+{"text": "jasa konsultan", "label": "PPh23_Jasa"}
+{"text": "jasa profesi akuntan", "label": "PPh23_Jasa"}
+{"text": "jasa notaris", "label": "PPh23_Jasa"}
+{"text": "jasa pengacara", "label": "PPh23_Jasa"}
+{"text": "jasa teknisi", "label": "PPh23_Jasa"}
+{"text": "royalti paten", "label": "PPh23_Royalti"}
+{"text": "royalti merek", "label": "PPh23_Royalti"}
+{"text": "sewa gedung kantor", "label": "PPh23_Sewa"}
+{"text": "sewa kendaraan", "label": "PPh23_Sewa"}
+{"text": "sewa alat berat", "label": "PPh23_Sewa"}
+{"text": "bunga non resident", "label": "PPh26"}
+{"text": "dividen luar negeri", "label": "PPh26"}
+{"text": "pajak pertambahan nilai", "label": "PPN"}
+{"text": "PPN masukan", "label": "PPN"}
+{"text": "PPN keluaran", "label": "PPN"}
+{"text": "sewa tanah bangunan", "label": "PPh4_2_Final"}
+{"text": "penghasilan konstruksi", "label": "PPh4_2_Final"}
+{"text": "koreksi fiskal positif", "label": "Fiscal_Correction_Positive"}
+{"text": "koreksi fiskal negatif", "label": "Fiscal_Correction_Negative"}
+{"text": "biaya entertainment", "label": "Fiscal_Correction_Positive"}
+{"text": "biaya representasi", "label": "Fiscal_Correction_Positive"}
+{"text": "pendapatan bunga", "label": "Non_Object"}
+{"text": "biaya listrik", "label": "Non_Object"}
+{"text": "biaya telepon", "label": "Non_Object"}
+{"text": "biaya air", "label": "Non_Object"}

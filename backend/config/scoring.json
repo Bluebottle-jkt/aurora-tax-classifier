@@ -1,0 +1,17 @@
+{
+  "confidence": {
+    "p_max_weight": 0.65,
+    "margin_weight": 0.35,
+    "short_text_penalty": 0.75,
+    "vague_text_penalty": 0.85,
+    "short_text_threshold": 3
+  },
+  "risk": {
+    "distance_weight": 0.55,
+    "anomaly_weight": 0.45,
+    "high_correction_threshold": 0.15,
+    "high_non_object_threshold": 0.25,
+    "high_variance_threshold": 0.8,
+    "end_of_period_threshold": 0.3
+  }
+}

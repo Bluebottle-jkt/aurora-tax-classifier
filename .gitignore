@@ -1,0 +1,421 @@
+# AURORA Tax Classifier - Git Ignore Configuration
+# Generated: 2025-12-24
+
+# ============================================
+# Python
+# ============================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# poetry
+poetry.lock
+
+# pdm
+.pdm.toml
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# ============================================
+# Node / JavaScript / TypeScript
+# ============================================
+# Dependencies
+node_modules/
+jspm_packages/
+
+# Production builds
+dist/
+build/
+.next/
+out/
+.nuxt/
+.vuepress/dist
+.cache/
+
+# Testing
+coverage/
+.nyc_output/
+
+# Misc
+.DS_Store
+*.pem
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Temporary files
+*.swp
+*.swo
+*~
+
+# TypeScript
+*.tsbuildinfo
+.npm
+.eslintcache
+
+# Parcel
+.parcel-cache
+
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# ============================================
+# Environment Variables
+# ============================================
+# IMPORTANT: Never commit actual .env files with secrets!
+# Only .env.example, .env.development, and .env.production (with placeholders) should be tracked
+
+# Ignore actual environment files with secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+
+# Keep template and configuration files (safe to commit)
+!.env.example
+!.env.sample
+!.env.development
+!.env.production
+
+# Note: .env.development and .env.production in this project contain
+# placeholders and safe defaults, not actual secrets
+
+# ============================================
+# IDEs and Editors
+# ============================================
+# VSCode
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.history/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Eclipse
+.project
+.classpath
+.settings/
+.metadata
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+
+# ============================================
+# Docker
+# ============================================
+# Docker volumes and data
+volumes/
+docker-volumes/
+*.docker.env
+
+# Docker Compose override
+docker-compose.override.yml
+
+# ============================================
+# Operating Systems
+# ============================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ============================================
+# Application Specific
+# ============================================
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+aurora.db
+
+# Storage and uploads
+storage/
+uploads/
+temp/
+tmp/
+*.tmp
+
+# Logs
+logs/
+*.log
+log/
+
+# ML Models (keep baseline models, ignore training artifacts)
+backend/models/*.pkl
+backend/models/*.h5
+backend/models/*.ckpt
+backend/models/checkpoints/
+backend/models/experiments/
+
+# Keep baseline models
+!backend/models/*.joblib
+!backend/models/README.md
+
+# Data files (if large datasets)
+data/raw/
+data/processed/
+*.csv.gz
+*.parquet
+
+# Keep sample data
+!data/samples/
+!data/examples/
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+
+# Compiled files
+*.pyc
+*.pyo
+*.class
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# ============================================
+# CI/CD and Deployment
+# ============================================
+# GitHub Actions
+# (usually we want to track .github/ but ignore some artifacts)
+.github/workflows/*.log
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Kubernetes
+*.kubeconfig
+
+# Cloud provider credentials
+*credentials.json
+*service-account*.json
+*.pem
+*.key
+*.cert
+
+# ============================================
+# Project Specific Excludes
+# ============================================
+# Temporary fix scripts (keep if needed, or add here)
+# FIX_*.bat
+# FIX_*.py
+
+# Session-specific documentation (uncomment if you want to ignore these)
+# START_HERE_AFTER_SESSION.md
+# CURRENT_STATE.md
+
+# Keep these important files
+!README.md
+!CONTRIBUTING.md
+!LICENSE
+!.gitignore
+!.gitattributes
+!.editorconfig

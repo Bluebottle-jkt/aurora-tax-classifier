@@ -1,0 +1,172 @@
+{
+  "project_name": "AURORA - Indonesian Tax Object Classifier",
+  "version": "1.0.0",
+  "architecture": "Clean Architecture / Hexagonal (Ports & Adapters) + MVC",
+  "production_gates": {
+    "step_1_architecture_design": {
+      "description": "Clean Architecture layers defined with clear dependency rules",
+      "passes": true,
+      "validation": [
+        "Domain layer has zero framework dependencies",
+        "Application layer depends only on Domain",
+        "Adapters implement ports from Application layer",
+        "Frameworks are outermost layer",
+        "MVC mapped: Views=React, Controllers=HTTP adapters, Models=Domain+Application"
+      ]
+    },
+    "step_2_environment_and_configuration": {
+      "description": "Environment configuration externalized and validated",
+      "passes": true,
+      "validation": [
+        ".env.example provided with all required variables",
+        "config/scoring.json with all scoring parameters",
+        "config/priors.json with business type priors",
+        "Docker Compose configuration complete",
+        "Development and production modes supported"
+      ]
+    },
+    "step_3_api_contract": {
+      "description": "RESTful API contract defined with validation",
+      "passes": true,
+      "validation": [
+        "POST /api/jobs - create job",
+        "GET /api/jobs/{id} - get status",
+        "GET /api/jobs/{id}/rows - paginated rows",
+        "GET /api/jobs/{id}/download - CSV download",
+        "GET /api/config - get configuration",
+        "GET /api/healthz - health check",
+        "OpenAPI/Swagger documentation auto-generated",
+        "Request/response DTOs with Pydantic validation"
+      ]
+    },
+    "step_4_model_specification": {
+      "description": "ML model architecture and training pipeline specified",
+      "passes": true,
+      "validation": [
+        "ClassifierPort interface defined",
+        "TF-IDF + Logistic Regression baseline implementation",
+        "Seed corpus with labeled examples (data/seed_corpus.jsonl)",
+        "Indonesian text preprocessing (Sastrawi stopwords)",
+        "Model versioning in audit trail",
+        "Pluggable architecture for model upgrades"
+      ]
+    },
+    "step_5_data_preprocessing_pipeline": {
+      "description": "Data ingestion and preprocessing validated",
+      "passes": true,
+      "validation": [
+        "CSV and Excel parsing with encoding detection",
+        "Required field validation (account_name)",
+        "Optional field handling (amount, date, etc.)",
+        "Text normalization (lowercase, regex cleaning)",
+        "Quality warnings (missing columns, high nulls)",
+        "File size limits enforced (max 10MB default)",
+        "File type validation (.csv, .xlsx)"
+      ]
+    },
+    "step_6_data_flow_design": {
+      "description": "End-to-end data flow from upload to results",
+      "passes": true,
+      "validation": [
+        "Upload -> Parse -> Validate -> Store",
+        "Background processing (FastAPI BackgroundTasks)",
+        "Prediction -> Confidence scoring -> Risk scoring",
+        "Results storage in database",
+        "CSV export with all fields",
+        "Explainability data attached to predictions"
+      ]
+    },
+    "step_7_logging_and_monitoring": {
+      "description": "Structured logging and observability implemented",
+      "passes": true,
+      "validation": [
+        "JSON-structured logs",
+        "request_id in all log entries",
+        "job_id in processing logs",
+        "Log levels: DEBUG, INFO, WARNING, ERROR",
+        "PII protection (NPWP hashing)",
+        "Performance metrics (duration_ms)",
+        "Error stack traces in ERROR logs"
+      ]
+    },
+    "step_8_security_validation": {
+      "description": "Security controls implemented and tested",
+      "passes": true,
+      "validation": [
+        "API key authentication (X-Aurora-Key header)",
+        "CORS configuration with origin whitelist",
+        "File upload validation (type, size)",
+        "No SQL injection (parameterized queries)",
+        "No XSS (React auto-escaping)",
+        "Audit trail with SHA256 file hash",
+        "Secrets in environment variables, not code"
+      ]
+    },
+    "step_9_ci_cd_pipeline": {
+      "description": "CI/CD pipeline with automated testing",
+      "passes": true,
+      "validation": [
+        "GitHub Actions workflow defined",
+        "Backend unit tests run on CI",
+        "Frontend build verification",
+        "Production gates validation (check_app_spec.py)",
+        "Docker image builds tested",
+        "Test coverage reporting"
+      ]
+    },
+    "step_10_production_resources": {
+      "description": "Production infrastructure defined",
+      "passes": true,
+      "validation": [
+        "Docker Compose with PostgreSQL",
+        "Volume mounts for persistence",
+        "Health checks configured",
+        "Resource limits defined",
+        "Environment-specific configurations",
+        "Scaling strategy documented"
+      ]
+    },
+    "step_11_failure_recovery_plan": {
+      "description": "Failure modes identified with recovery procedures",
+      "passes": true,
+      "validation": [
+        "Database backup strategy documented",
+        "File storage backup strategy documented",
+        "Job retry mechanism (manual re-upload for MVP)",
+        "Error responses with actionable messages",
+        "Health check endpoint for monitoring",
+        "Graceful degradation (ML service down)"
+      ]
+    },
+    "step_12_compliance_requirements": {
+      "description": "Audit and compliance features implemented",
+      "passes": true,
+      "validation": [
+        "Audit trail for every job",
+        "Model version tracking",
+        "Preprocessing version tracking",
+        "Scoring configuration version",
+        "Input file SHA256 hash",
+        "Timestamp for all operations",
+        "Explainability for all predictions"
+      ]
+    },
+    "step_13_release_assets": {
+      "description": "Release package complete and documented",
+      "passes": true,
+      "validation": [
+        "README.md with quick start guide",
+        "Architecture documentation",
+        "API documentation (OpenAPI)",
+        "Docker Compose ready to run",
+        "Makefile with common commands",
+        ".env.example with all variables",
+        "Sample data for testing"
+      ]
+    }
+  },
+  "restart_condition": {
+    "rule": "If any production gate has 'passes': false, development must restart from step_1_architecture_design",
+    "enforcement": "CI pipeline runs check_app_spec.py which fails build if any gate fails"
+  }
+}

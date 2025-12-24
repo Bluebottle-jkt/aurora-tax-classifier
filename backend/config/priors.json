@@ -1,0 +1,44 @@
+{
+  "Manufaktur": {
+    "PPh21": 0.25,
+    "PPh22": 0.05,
+    "PPh23_Jasa": 0.2,
+    "PPh23_Sewa": 0.05,
+    "PPN": 0.3,
+    "PPh4_2_Final": 0.03,
+    "Fiscal_Correction_Positive": 0.05,
+    "Fiscal_Correction_Negative": 0.02,
+    "Non_Object": 0.05
+  },
+  "Perdagangan": {
+    "PPh21": 0.2,
+    "PPh22": 0.1,
+    "PPh23_Jasa": 0.15,
+    "PPN": 0.35,
+    "PPh4_2_Final": 0.05,
+    "Fiscal_Correction_Positive": 0.07,
+    "Fiscal_Correction_Negative": 0.03,
+    "Non_Object": 0.05
+  },
+  "Jasa": {
+    "PPh21": 0.3,
+    "PPh23_Jasa": 0.25,
+    "PPh23_Sewa": 0.1,
+    "PPN": 0.2,
+    "PPh4_2_Final": 0.05,
+    "Fiscal_Correction_Positive": 0.05,
+    "Fiscal_Correction_Negative": 0.02,
+    "Non_Object": 0.03
+  },
+  "Default": {
+    "PPh21": 0.2,
+    "PPh22": 0.05,
+    "PPh23_Jasa": 0.15,
+    "PPh23_Sewa": 0.05,
+    "PPN": 0.25,
+    "PPh4_2_Final": 0.05,
+    "Fiscal_Correction_Positive": 0.1,
+    "Fiscal_Correction_Negative": 0.05,
+    "Non_Object": 0.1
+  }
+}

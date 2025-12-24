@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question or Discussion
+    url: https://github.com/YOUR_USERNAME/aurora-tax-classifier/discussions
+    about: Ask questions or start discussions about the project
+  - name: Documentation
+    url: https://github.com/YOUR_USERNAME/aurora-tax-classifier/blob/main/README.md
+    about: Read the project documentation
+  - name: Security Issue
+    url: https://github.com/YOUR_USERNAME/aurora-tax-classifier/security/advisories/new
+    about: Report a security vulnerability (private)
