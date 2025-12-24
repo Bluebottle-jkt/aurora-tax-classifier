@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../lib/axios';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface AnalysisResult {
@@ -105,10 +105,8 @@ export default function DirectAnalysisPage() {
 
     setLoading(true);
     try {
-      const response = await axios.post('/api/predict/direct', {
+      const response = await api.post('/api/predict/direct', {
         texts: [singleText],
-      }, {
-        headers: { 'X-Aurora-Key': 'aurora-dev-key-change-in-production' }
       });
 
       setSingleResult(response.data.predictions[0]);
@@ -126,10 +124,8 @@ export default function DirectAnalysisPage() {
 
     setLoading(true);
     try {
-      const response = await axios.post('/api/predict/direct', {
+      const response = await api.post('/api/predict/direct', {
         texts: lines,
-      }, {
-        headers: { 'X-Aurora-Key': 'aurora-dev-key-change-in-production' }
       });
 
       setBulkResults(response.data.predictions);

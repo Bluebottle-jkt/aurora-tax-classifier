@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../lib/axios';
 import { motion } from 'framer-motion';
 import {
   PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid,
@@ -58,15 +58,11 @@ export default function ResultsPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const jobRes = await axios.get(`/api/jobs/${jobId}`, {
-          headers: { 'X-Aurora-Key': 'aurora-dev-key-change-in-production' }
-        });
+        const jobRes = await api.get(`/api/jobs/${jobId}`);
         setJob(jobRes.data);
 
         if (jobRes.data.status === 'completed') {
-          const rowsRes = await axios.get(`/api/jobs/${jobId}/rows`, {
-            headers: { 'X-Aurora-Key': 'aurora-dev-key-change-in-production' }
-          });
+          const rowsRes = await api.get(`/api/jobs/${jobId}/rows`);
           setRows(rowsRes.data.rows);
           setLoading(false);
         }

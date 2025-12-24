@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../lib/axios';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function UploadPage() {
@@ -54,13 +54,9 @@ export default function UploadPage() {
     formData.append('business_type', businessType);
 
     try {
-      const response = await axios.post('/api/jobs', formData, {
-        headers: {
-          'X-Aurora-Key': 'aurora-dev-key-change-in-production',
-        },
-      });
+      const response = await api.post('/api/jobs', formData);
 
-      navigate(`/app/results/${response.data.job_id}`);
+      navigate(`/results/${response.data.job_id}`);
     } catch (error) {
       alert('Upload failed');
     } finally {
