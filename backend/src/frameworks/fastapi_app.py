@@ -105,6 +105,13 @@ async def get_job(job_id: str, x_aurora_key: str = Header(None)):
     if not job:
         raise HTTPException(status_code=404, detail="Job not found")
 
+    # Calculate total_amount if job is completed
+    total_amount = None
+    if job.status.value == "completed":
+        rows = pred_repo.find_by_job(job_id, limit=10000, offset=0)
+        amounts = [r.amount for r in rows if r.amount is not None]
+        total_amount = sum(amounts) if amounts else 0
+
     return {
         "job_id": job.job_id,
         "status": job.status.value,
@@ -115,6 +122,7 @@ async def get_job(job_id: str, x_aurora_key: str = Header(None)):
             "total_rows": job.total_rows,
             "avg_confidence": job.avg_confidence,
             "risk_percent": job.risk_percent,
+            "total_amount": total_amount,
         } if job.status.value == "completed" else None
     }
 

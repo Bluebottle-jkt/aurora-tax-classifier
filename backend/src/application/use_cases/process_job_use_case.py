@@ -117,6 +117,20 @@ class ProcessJobUseCase:
                     df['account_name'] = df[col]
                     break
 
+        # Map common column names for amount
+        if 'amount' not in df.columns:
+            for col in ['nilai', 'jumlah', 'debit', 'kredit', 'amount', 'total']:
+                if col in df.columns:
+                    df['amount'] = pd.to_numeric(df[col], errors='coerce')
+                    break
+
+        # Map common column names for date
+        if 'date' not in df.columns:
+            for col in ['tanggal', 'transaction_date', 'tgl', 'date', 'posting_date']:
+                if col in df.columns:
+                    df['date'] = df[col]
+                    break
+
         return df
 
     def _create_prediction_rows(
