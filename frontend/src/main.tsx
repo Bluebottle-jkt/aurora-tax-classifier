@@ -7,10 +7,6 @@ import './index.css'
 // Get Clerk publishable key from environment variables
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
-// Debug: Log environment variables (remove in production)
-console.log('Clerk Key Present:', !!PUBLISHABLE_KEY)
-console.log('Clerk Key Value:', PUBLISHABLE_KEY)
-
 if (!PUBLISHABLE_KEY) {
   // Show error in DOM instead of throwing
   const root = document.getElementById('root')

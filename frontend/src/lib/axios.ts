@@ -18,11 +18,6 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
   // Add API key from environment or use dev key
   const apiKey = import.meta.env.VITE_API_KEY || 'aurora-dev-key-change-in-production';
-
-  // Debug logging
-  console.log('API Key from env:', import.meta.env.VITE_API_KEY);
-  console.log('API Key being used:', apiKey);
-
   config.headers['X-Aurora-Key'] = apiKey;
 
   // Don't set Content-Type for FormData - browser will set it with boundary

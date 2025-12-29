@@ -9,8 +9,6 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  // Load .env from root directory (parent of frontend)
-  envDir: path.resolve(__dirname, '..'),
   server: {
     port: 3000,
     proxy: {
