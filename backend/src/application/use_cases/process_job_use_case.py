@@ -95,15 +95,28 @@ class ProcessJobUseCase:
         if file_path.endswith('.csv'):
             df = pd.read_csv(file_path, encoding='utf-8')
         else:
-            df = pd.read_excel(file_path)
-        
+            # Read Excel file - handle multi-sheet files
+            excel_file = pd.ExcelFile(file_path)
+
+            # If multiple sheets, read all and combine
+            if len(excel_file.sheet_names) > 1:
+                dfs = []
+                for sheet_name in excel_file.sheet_names:
+                    sheet_df = pd.read_excel(excel_file, sheet_name=sheet_name)
+                    sheet_df['sheet_name'] = sheet_name  # Track source sheet
+                    dfs.append(sheet_df)
+                df = pd.concat(dfs, ignore_index=True)
+            else:
+                # Single sheet - read directly
+                df = pd.read_excel(file_path)
+
         # Map common column names to account_name if missing
         if 'account_name' not in df.columns:
             for col in ['description', 'account_description', 'nama_akun', 'deskripsi']:
                 if col in df.columns:
                     df['account_name'] = df[col]
                     break
-        
+
         return df
 
     def _create_prediction_rows(

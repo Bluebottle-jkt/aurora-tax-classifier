@@ -123,7 +123,7 @@ async def get_job(job_id: str, x_aurora_key: str = Header(None)):
 async def get_rows(
     job_id: str,
     page: int = 1,
-    page_size: int = 100,
+    page_size: int = 1000,
     x_aurora_key: str = Header(None)
 ):
     """Get prediction rows"""
