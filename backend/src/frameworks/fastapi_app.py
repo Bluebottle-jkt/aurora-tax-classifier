@@ -25,6 +25,7 @@ from ..application.use_cases import (
     CreateJobUseCase,
     ProcessJobUseCase,
 )
+from ..application.use_cases.inspect_file_use_case import InspectFileUseCase
 
 # Import domain objects
 from ..domain.value_objects import TaxObjectLabel
@@ -65,6 +66,7 @@ process_job_uc = ProcessJobUseCase(
     job_repo, pred_repo, classifier, storage, config, explainer,
     confidence_policy, risk_policy
 )
+inspect_file_uc = InspectFileUseCase()
 
 # API Key validation
 API_KEY = os.getenv("API_KEY", "aurora-dev-key")
@@ -75,6 +77,35 @@ def verify_api_key(x_aurora_key: Optional[str] = Header(None)):
 
 
 # Routes
+@app.post("/api/files/inspect")
+async def inspect_file(
+    file: UploadFile = File(...),
+    x_aurora_key: str = Header(None)
+):
+    """Inspect uploaded file and return metadata + preview"""
+    verify_api_key(x_aurora_key)
+
+    try:
+        # Get file content
+        content = await file.read()
+
+        # Reset file pointer for potential reuse
+        await file.seek(0)
+
+        # Use BytesIO for pandas compatibility
+        from io import BytesIO
+        file_stream = BytesIO(content)
+
+        # Inspect file
+        result = inspect_file_uc.execute(file_stream, file.filename)
+
+        return result
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"File inspection failed: {str(e)}")
+
+
 @app.post("/api/jobs")
 async def create_job(
     file: UploadFile = File(...),

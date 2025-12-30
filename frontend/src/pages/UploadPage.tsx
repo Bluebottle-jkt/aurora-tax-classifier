@@ -3,13 +3,36 @@ import { useNavigate } from 'react-router-dom';
 import api from '../lib/axios';
 import { motion, AnimatePresence } from 'framer-motion';
 
+interface FileInspection {
+  file_type: string;
+  filename: string;
+  sheets: Array<{
+    name: string;
+    index: number;
+    n_rows: number;
+    n_cols: number;
+    columns: string[];
+  }>;
+  default_sheet: string;
+  preview: {
+    sheet_name: string;
+    columns: string[];
+    rows: any[][];
+    n_rows_total: number;
+  };
+  warnings: string[];
+}
+
 export default function UploadPage() {
   const navigate = useNavigate();
   const [file, setFile] = useState<File | null>(null);
   const [businessType, setBusinessType] = useState('');
   const [loading, setLoading] = useState(false);
+  const [inspecting, setInspecting] = useState(false);
   const [dragActive, setDragActive] = useState(false);
-  const [preview, setPreview] = useState<string[]>([]);
+  const [inspection, setInspection] = useState<FileInspection | null>(null);
+  const [selectedSheet, setSelectedSheet] = useState<string>('');
+  const [combineSheets, setCombineSheets] = useState(false);
 
   const handleDrag = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -31,17 +54,33 @@ export default function UploadPage() {
     }
   }, []);
 
-  const handleFileSelect = (selectedFile: File) => {
+  const handleFileSelect = async (selectedFile: File) => {
     setFile(selectedFile);
+    setInspection(null);
+    setInspecting(true);
 
-    // Read first few lines for preview
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const text = e.target?.result as string;
-      const lines = text.split('\n').slice(0, 5);
-      setPreview(lines);
-    };
-    reader.readAsText(selectedFile.slice(0, 2000));
+    try {
+      // Call backend inspection endpoint
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+
+      const response = await api.post('/api/files/inspect', formData);
+      const inspectionData: FileInspection = response.data;
+
+      setInspection(inspectionData);
+      setSelectedSheet(inspectionData.default_sheet);
+
+      // Auto-enable combine sheets if multiple sheets detected
+      if (inspectionData.sheets.length > 1) {
+        setCombineSheets(true);
+      }
+    } catch (error) {
+      console.error('File inspection failed:', error);
+      alert('Failed to inspect file. Please check the file format and try again.');
+      setFile(null);
+    } finally {
+      setInspecting(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -199,19 +238,118 @@ export default function UploadPage() {
 
               {/* File Preview */}
               <AnimatePresence>
-                {preview.length > 0 && (
+                {inspecting && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="mb-6 bg-blue-50 rounded-lg p-4 border border-blue-200"
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="animate-spin text-2xl">🔄</div>
+                      <p className="text-blue-700 font-medium">Inspecting file...</p>
+                    </div>
+                  </motion.div>
+                )}
+
+                {inspection && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="mb-6 bg-gray-50 rounded-lg p-4 border border-gray-200"
+                    className="mb-6"
                   >
-                    <h3 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-                      👁️ File Preview (First 5 lines)
-                    </h3>
-                    <pre className="text-xs text-gray-600 overflow-x-auto">
-                      {preview.join('\n')}
-                    </pre>
+                    {/* Sheet Selector for Multi-Sheet Files */}
+                    {inspection.sheets.length > 1 && (
+                      <div className="mb-4 bg-amber-50 rounded-lg p-4 border border-amber-200">
+                        <h3 className="text-sm font-semibold text-amber-800 mb-3 flex items-center gap-2">
+                          📊 Multi-Sheet Excel Detected ({inspection.sheets.length} sheets)
+                        </h3>
+
+                        <div className="flex items-center gap-4 mb-3">
+                          <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={combineSheets}
+                              onChange={(e) => setCombineSheets(e.target.checked)}
+                              className="w-4 h-4"
+                            />
+                            <span className="text-sm font-medium text-gray-700">
+                              Combine all sheets
+                            </span>
+                          </label>
+                        </div>
+
+                        {!combineSheets && (
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                              Select Sheet:
+                            </label>
+                            <select
+                              value={selectedSheet}
+                              onChange={(e) => setSelectedSheet(e.target.value)}
+                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+                            >
+                              {inspection.sheets.map((sheet) => (
+                                <option key={sheet.name} value={sheet.name}>
+                                  {sheet.name} ({sheet.n_rows} rows, {sheet.n_cols} columns)
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Preview Table */}
+                    <div className="bg-gray-50 rounded-lg p-4 border border-gray-200 overflow-x-auto">
+                      <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                        👁️ File Preview
+                        {combineSheets && inspection.sheets.length > 1 ?
+                          ` (Combined from ${inspection.sheets.length} sheets)` :
+                          ` (Sheet: ${inspection.preview.sheet_name})`
+                        }
+                      </h3>
+
+                      <table className="min-w-full text-xs">
+                        <thead>
+                          <tr className="bg-gray-200">
+                            {inspection.preview.columns.map((col, idx) => (
+                              <th key={idx} className="px-3 py-2 text-left font-semibold text-gray-700 border-b">
+                                {col}
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {inspection.preview.rows.map((row, rowIdx) => (
+                            <tr key={rowIdx} className="border-b hover:bg-gray-100">
+                              {row.map((cell, cellIdx) => (
+                                <td key={cellIdx} className="px-3 py-2 text-gray-600">
+                                  {cell !== null && cell !== undefined ? String(cell) : '-'}
+                                </td>
+                              ))}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+
+                      <p className="text-xs text-gray-500 mt-2">
+                        Showing first {inspection.preview.rows.length} of {inspection.preview.n_rows_total} rows
+                      </p>
+                    </div>
+
+                    {/* Warnings */}
+                    {inspection.warnings.length > 0 && (
+                      <div className="mt-4 bg-yellow-50 rounded-lg p-3 border border-yellow-200">
+                        <p className="text-sm font-semibold text-yellow-800 mb-2">⚠️ Warnings:</p>
+                        <ul className="text-xs text-yellow-700 list-disc list-inside space-y-1">
+                          {inspection.warnings.map((warning, idx) => (
+                            <li key={idx}>{warning}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                   </motion.div>
                 )}
               </AnimatePresence>
