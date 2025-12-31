@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../lib/axios';
 import { motion, AnimatePresence } from 'framer-motion';
+import KBLIBusinessSelector from '../components/KBLIBusinessSelector';
 
 interface FileInspection {
   file_type: string;
@@ -27,6 +28,8 @@ export default function UploadPage() {
   const navigate = useNavigate();
   const [file, setFile] = useState<File | null>(null);
   const [businessType, setBusinessType] = useState('');
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedDivisions, setSelectedDivisions] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [inspecting, setInspecting] = useState(false);
   const [dragActive, setDragActive] = useState(false);
@@ -83,14 +86,21 @@ export default function UploadPage() {
     }
   };
 
+  const handleKBLISelectionChange = (categories: string[], divisions: string[]) => {
+    setSelectedCategories(categories);
+    setSelectedDivisions(divisions);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!file || !businessType) return;
+    if (!file || selectedDivisions.length === 0) return;
 
     setLoading(true);
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('business_type', businessType);
+    formData.append('business_type', businessType || 'Custom');
+    formData.append('selected_categories', JSON.stringify(selectedCategories));
+    formData.append('selected_divisions', JSON.stringify(selectedDivisions));
 
     try {
       const response = await api.post('/api/jobs', formData);
@@ -354,34 +364,16 @@ export default function UploadPage() {
                 )}
               </AnimatePresence>
 
-              {/* Business Type Selection */}
+              {/* KBLI Business Type Selection */}
               <div className="mb-8">
                 <label className="block text-sm font-semibold text-gray-700 mb-3">
-                  Business Type / Industry Classification
+                  Business Classification (KBLI 2025)
                 </label>
-                <div className="grid grid-cols-3 gap-4">
-                  {[
-                    { value: 'Manufaktur', icon: '🏭', label: 'Manufacturing', desc: 'Production & Assembly' },
-                    { value: 'Perdagangan', icon: '🏪', label: 'Trading', desc: 'Buy & Sell Goods' },
-                    { value: 'Jasa', icon: '💼', label: 'Services', desc: 'Professional Services' }
-                  ].map((type) => (
-                    <motion.div
-                      key={type.value}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => setBusinessType(type.value)}
-                      className={`cursor-pointer rounded-xl p-6 border-2 transition-all ${
-                        businessType === type.value
-                          ? 'border-indigo-600 bg-indigo-50 shadow-lg'
-                          : 'border-gray-200 bg-white hover:border-indigo-300 hover:shadow-md'
-                      }`}
-                    >
-                      <div className="text-4xl mb-3 text-center">{type.icon}</div>
-                      <h3 className="font-bold text-gray-800 text-center mb-1">{type.label}</h3>
-                      <p className="text-xs text-gray-500 text-center">{type.desc}</p>
-                    </motion.div>
-                  ))}
-                </div>
+                <KBLIBusinessSelector
+                  onSelectionChange={handleKBLISelectionChange}
+                  selectedCategories={selectedCategories}
+                  selectedDivisions={selectedDivisions}
+                />
               </div>
 
               {/* Submit Button */}
@@ -389,9 +381,9 @@ export default function UploadPage() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
-                disabled={loading || !file || !businessType}
+                disabled={loading || !file || selectedDivisions.length === 0}
                 className={`w-full py-4 rounded-xl font-bold text-lg shadow-lg transition-all ${
-                  loading || !file || !businessType
+                  loading || !file || selectedDivisions.length === 0
                     ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                     : 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:shadow-2xl'
                 }`}

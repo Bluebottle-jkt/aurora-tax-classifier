@@ -1,0 +1,842 @@
+{
+  "metadata": {
+    "source": "KBLI 2025 (Peraturan BPS No. 7 Tahun 2025)",
+    "level": "golongan_pokok_2digit",
+    "notes": [
+      "Daftar ini berisi level 2-digit (golongan pokok) sebagai opsi pemilihan model Aurora sebelum analisis.",
+      "Jika dibutuhkan leaf 5-digit (kelompok), dapat dibuat tabel terpisah per kategori untuk meningkatkan granularitas."
+    ]
+  },
+  "categories": [
+    {
+      "code": "A",
+      "name": "Pertanian, Kehutanan, dan Perikanan",
+      "divisions": [
+        {
+          "code": "01",
+          "name": "Pertanian tanaman, peternakan, perburuan, dan kegiatan jasa terkait",
+          "keywords": [
+            "pertanian",
+            "tanaman",
+            "peternakan",
+            "perburuan",
+            "jasa tani"
+          ]
+        },
+        {
+          "code": "02",
+          "name": "Kehutanan dan penebangan kayu",
+          "keywords": [
+            "kehutanan",
+            "penebangan",
+            "kayu",
+            "hutan",
+            "logging"
+          ]
+        },
+        {
+          "code": "03",
+          "name": "Perikanan dan akuakultur",
+          "keywords": [
+            "perikanan",
+            "akuakultur",
+            "budidaya",
+            "ikan",
+            "biota air"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "B",
+      "name": "Pertambangan dan Penggalian",
+      "divisions": [
+        {
+          "code": "05",
+          "name": "Pertambangan batu bara dan lignit",
+          "keywords": [
+            "batubara",
+            "lignit",
+            "tambang",
+            "coal",
+            "eksplorasi"
+          ]
+        },
+        {
+          "code": "06",
+          "name": "Pertambangan minyak bumi dan gas alam",
+          "keywords": [
+            "migas",
+            "minyak",
+            "gas",
+            "drilling",
+            "eksplorasi"
+          ]
+        },
+        {
+          "code": "07",
+          "name": "Pertambangan bijih logam",
+          "keywords": [
+            "bijih",
+            "logam",
+            "nikel",
+            "tembaga",
+            "kobalt"
+          ]
+        },
+        {
+          "code": "08",
+          "name": "Pertambangan dan penggalian lainnya",
+          "keywords": [
+            "galian",
+            "pasir",
+            "batu",
+            "tanah liat",
+            "garam"
+          ]
+        },
+        {
+          "code": "09",
+          "name": "Aktivitas jasa penunjang pertambangan dan penggalian",
+          "keywords": [
+            "jasa tambang",
+            "penunjang",
+            "drilling service",
+            "survey",
+            "kontrak tambang"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "D",
+      "name": "Penyediaan Listrik, Gas, Uap/Air Panas, dan Udara Dingin",
+      "divisions": [
+        {
+          "code": "35",
+          "name": "Penyediaan listrik, gas, uap/air panas, dan udara dingin",
+          "keywords": [
+            "listrik",
+            "gas",
+            "uap",
+            "air panas",
+            "pendingin"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "E",
+      "name": "Penyediaan Air; Pengelolaan Air Limbah, Penanganan Limbah, dan Remediasi",
+      "divisions": [
+        {
+          "code": "36",
+          "name": "Pengumpulan, pengolahan, dan penyediaan air",
+          "keywords": [
+            "air bersih",
+            "PDAM",
+            "pengolahan air",
+            "distribusi",
+            "water supply"
+          ]
+        },
+        {
+          "code": "37",
+          "name": "Pengelolaan air limbah",
+          "keywords": [
+            "air limbah",
+            "IPAL",
+            "sewerage",
+            "sanitasi",
+            "treatment"
+          ]
+        },
+        {
+          "code": "38",
+          "name": "Pengumpulan, pengolahan, dan pembuangan limbah; daur ulang material",
+          "keywords": [
+            "limbah",
+            "TPA",
+            "daur ulang",
+            "waste management",
+            "recycling"
+          ]
+        },
+        {
+          "code": "39",
+          "name": "Aktivitas remediasi dan pengelolaan limbah/sampah lainnya",
+          "keywords": [
+            "remediasi",
+            "pencemaran",
+            "pemulihan",
+            "hazardous",
+            "cleanup"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "F",
+      "name": "Konstruksi",
+      "divisions": [
+        {
+          "code": "41",
+          "name": "Konstruksi bangunan",
+          "keywords": [
+            "bangunan",
+            "gedung",
+            "perumahan",
+            "kontraktor",
+            "pembangunan"
+          ]
+        },
+        {
+          "code": "42",
+          "name": "Konstruksi bangunan sipil",
+          "keywords": [
+            "sipil",
+            "jalan",
+            "jembatan",
+            "infrastruktur",
+            "konstruksi"
+          ]
+        },
+        {
+          "code": "43",
+          "name": "Konstruksi khusus",
+          "keywords": [
+            "MEP",
+            "instalasi",
+            "finishing",
+            "pemasangan",
+            "spesialis"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "G",
+      "name": "Perdagangan Besar dan Eceran",
+      "divisions": [
+        {
+          "code": "45",
+          "name": "Perdagangan besar dan eceran, reparasi dan perawatan mobil dan sepeda motor",
+          "keywords": [
+            "dealer",
+            "sparepart",
+            "servis",
+            "mobil",
+            "motor"
+          ]
+        },
+        {
+          "code": "46",
+          "name": "Perdagangan besar, bukan mobil dan sepeda motor",
+          "keywords": [
+            "grosir",
+            "wholesale",
+            "distributor",
+            "B2B",
+            "perdagangan"
+          ]
+        },
+        {
+          "code": "47",
+          "name": "Perdagangan eceran, bukan mobil dan sepeda motor",
+          "keywords": [
+            "ritel",
+            "retail",
+            "toko",
+            "ecommerce",
+            "konsumen"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "H",
+      "name": "Transportasi dan Penyimpanan",
+      "divisions": [
+        {
+          "code": "49",
+          "name": "Angkutan darat dan angkutan melalui pipa",
+          "keywords": [
+            "angkutan darat",
+            "bus",
+            "truk",
+            "pipa",
+            "logistik"
+          ]
+        },
+        {
+          "code": "50",
+          "name": "Angkutan air",
+          "keywords": [
+            "pelayaran",
+            "kapal",
+            "ferry",
+            "angkutan laut",
+            "angkutan sungai"
+          ]
+        },
+        {
+          "code": "51",
+          "name": "Angkutan udara",
+          "keywords": [
+            "maskapai",
+            "cargo udara",
+            "bandara",
+            "aviation",
+            "flight"
+          ]
+        },
+        {
+          "code": "52",
+          "name": "Pergudangan dan aktivitas penunjang angkutan",
+          "keywords": [
+            "gudang",
+            "warehouse",
+            "forwarding",
+            "handling",
+            "terminal"
+          ]
+        },
+        {
+          "code": "53",
+          "name": "Pos dan kurir",
+          "keywords": [
+            "pos",
+            "kurir",
+            "delivery",
+            "pengiriman",
+            "last mile"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "I",
+      "name": "Aktivitas Penyediaan Akomodasi dan Makan Minum",
+      "divisions": [
+        {
+          "code": "55",
+          "name": "Akomodasi",
+          "keywords": [
+            "hotel",
+            "penginapan",
+            "resort",
+            "homestay",
+            "akomodasi"
+          ]
+        },
+        {
+          "code": "56",
+          "name": "Penyediaan makan minum",
+          "keywords": [
+            "restoran",
+            "kafe",
+            "catering",
+            "makanan",
+            "minuman"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "J",
+      "name": "Aktivitas Penerbitan, Penyiaran, serta Produksi dan Distribusi Konten",
+      "divisions": [
+        {
+          "code": "58",
+          "name": "Aktivitas penerbitan",
+          "keywords": [
+            "penerbitan",
+            "buku",
+            "majalah",
+            "software publishing",
+            "self-publishing"
+          ]
+        },
+        {
+          "code": "59",
+          "name": "Produksi film, video, program televisi; perekaman suara; penerbitan musik",
+          "keywords": [
+            "film",
+            "video",
+            "televisi",
+            "rekaman",
+            "musik"
+          ]
+        },
+        {
+          "code": "60",
+          "name": "Pemrograman & penyiaran, kantor berita, dan distribusi konten lainnya",
+          "keywords": [
+            "penyiaran",
+            "radio",
+            "TV",
+            "streaming",
+            "kantor berita"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "K",
+      "name": "Aktivitas Telekomunikasi, Pemrograman Komputer, Konsultansi, Infrastruktur Komputasi, dan Jasa Informasi Lainnya",
+      "divisions": [
+        {
+          "code": "61",
+          "name": "Telekomunikasi",
+          "keywords": [
+            "telekomunikasi",
+            "jaringan",
+            "internet",
+            "seluler",
+            "transmisi"
+          ]
+        },
+        {
+          "code": "62",
+          "name": "Pemrograman komputer, konsultansi, dan kegiatan terkait",
+          "keywords": [
+            "software dev",
+            "konsultansi IT",
+            "aplikasi",
+            "sistem",
+            "pemrograman"
+          ]
+        },
+        {
+          "code": "63",
+          "name": "Infrastruktur komputasi, pengolahan data, hosting, dan kegiatan terkait; portal web",
+          "keywords": [
+            "data center",
+            "hosting",
+            "cloud",
+            "portal web",
+            "pengolahan data"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "L",
+      "name": "Aktivitas Keuangan dan Asuransi",
+      "divisions": [
+        {
+          "code": "64",
+          "name": "Aktivitas jasa keuangan, selain asuransi dan dana pensiun",
+          "keywords": [
+            "bank",
+            "pembiayaan",
+            "kredit",
+            "fintech",
+            "intermediasi"
+          ]
+        },
+        {
+          "code": "65",
+          "name": "Asuransi, reasuransi, dan dana pensiun",
+          "keywords": [
+            "asuransi",
+            "reasuransi",
+            "klaim",
+            "premi",
+            "dana pensiun"
+          ]
+        },
+        {
+          "code": "66",
+          "name": "Aktivitas penunjang jasa keuangan dan asuransi",
+          "keywords": [
+            "pialang",
+            "penilai",
+            "konsultan keuangan",
+            "penunjang",
+            "broker"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "M",
+      "name": "Aktivitas Real Estat",
+      "divisions": [
+        {
+          "code": "68",
+          "name": "Aktivitas real estat",
+          "keywords": [
+            "properti",
+            "sewa",
+            "jual beli",
+            "agen",
+            "manajemen aset"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "N",
+      "name": "Aktivitas Profesional, Ilmiah, dan Teknis",
+      "divisions": [
+        {
+          "code": "69",
+          "name": "Aktivitas hukum dan akuntansi",
+          "keywords": [
+            "hukum",
+            "legal",
+            "akuntansi",
+            "audit",
+            "konsultan pajak"
+          ]
+        },
+        {
+          "code": "70",
+          "name": "Aktivitas kantor pusat; konsultansi manajemen",
+          "keywords": [
+            "holding",
+            "kantor pusat",
+            "manajemen",
+            "konsultan",
+            "strategi"
+          ]
+        },
+        {
+          "code": "71",
+          "name": "Arsitektur dan teknik; pengujian dan analisis teknis",
+          "keywords": [
+            "arsitektur",
+            "engineering",
+            "uji lab",
+            "inspeksi",
+            "analisis teknis"
+          ]
+        },
+        {
+          "code": "72",
+          "name": "Penelitian dan pengembangan ilmiah",
+          "keywords": [
+            "litbang",
+            "R&D",
+            "laboratorium",
+            "inovasi",
+            "penelitian"
+          ]
+        },
+        {
+          "code": "73",
+          "name": "Periklanan dan riset pasar",
+          "keywords": [
+            "iklan",
+            "branding",
+            "media",
+            "riser pasar",
+            "marketing"
+          ]
+        },
+        {
+          "code": "74",
+          "name": "Aktivitas profesional, ilmiah, dan teknis lainnya",
+          "keywords": [
+            "desain",
+            "fotografi",
+            "penerjemah",
+            "konsultan teknis",
+            "profesional"
+          ]
+        },
+        {
+          "code": "75",
+          "name": "Aktivitas kesehatan hewan",
+          "keywords": [
+            "dokter hewan",
+            "klinik hewan",
+            "vaksin hewan",
+            "pet care",
+            "kesehatan hewan"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "O",
+      "name": "Aktivitas Administratif dan Penunjang Usaha",
+      "divisions": [
+        {
+          "code": "77",
+          "name": "Aktivitas persewaan dan sewa guna usaha tanpa hak opsi",
+          "keywords": [
+            "rental",
+            "leasing",
+            "sewa",
+            "alat berat",
+            "kendaraan"
+          ]
+        },
+        {
+          "code": "78",
+          "name": "Aktivitas ketenagakerjaan",
+          "keywords": [
+            "outsourcing",
+            "rekrutmen",
+            "agen tenaga kerja",
+            "HR",
+            "staffing"
+          ]
+        },
+        {
+          "code": "79",
+          "name": "Agen perjalanan, penyelenggara tur, dan aktivitas jasa pemesanan lainnya",
+          "keywords": [
+            "travel agent",
+            "tour",
+            "reservasi",
+            "ticketing",
+            "wisata"
+          ]
+        },
+        {
+          "code": "80",
+          "name": "Aktivitas keamanan dan investigasi",
+          "keywords": [
+            "security",
+            "satpam",
+            "investigasi",
+            "CCTV",
+            "pengamanan"
+          ]
+        },
+        {
+          "code": "81",
+          "name": "Aktivitas jasa untuk bangunan dan pertamanan",
+          "keywords": [
+            "cleaning",
+            "facility",
+            "pest control",
+            "pertamanan",
+            "maintenance"
+          ]
+        },
+        {
+          "code": "82",
+          "name": "Aktivitas kantor, penunjang kantor, dan penunjang usaha lainnya",
+          "keywords": [
+            "call center",
+            "backoffice",
+            "admin",
+            "event organizer",
+            "support"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "P",
+      "name": "Administrasi Pemerintahan dan Pertahanan, serta Jaminan Sosial Wajib",
+      "divisions": [
+        {
+          "code": "84",
+          "name": "Administrasi pemerintahan, pertahanan, dan jaminan sosial wajib",
+          "keywords": [
+            "pemerintah",
+            "regulasi",
+            "pertahanan",
+            "jamsos",
+            "administrasi"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "Q",
+      "name": "Pendidikan",
+      "divisions": [
+        {
+          "code": "85",
+          "name": "Pendidikan",
+          "keywords": [
+            "sekolah",
+            "universitas",
+            "pelatihan",
+            "kursus",
+            "edukasi"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "R",
+      "name": "Aktivitas Kesehatan Manusia dan Aktivitas Sosial",
+      "divisions": [
+        {
+          "code": "86",
+          "name": "Aktivitas kesehatan manusia",
+          "keywords": [
+            "rumah sakit",
+            "klinik",
+            "dokter",
+            "laboratorium medis",
+            "farmasi"
+          ]
+        },
+        {
+          "code": "87",
+          "name": "Aktivitas perawatan di fasilitas (residensial)",
+          "keywords": [
+            "panti",
+            "residensial",
+            "perawatan",
+            "rehabilitasi",
+            "nursing"
+          ]
+        },
+        {
+          "code": "88",
+          "name": "Aktivitas sosial tanpa akomodasi",
+          "keywords": [
+            "bansos",
+            "kesejahteraan",
+            "layanan sosial",
+            "komunitas",
+            "care"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "S",
+      "name": "Kesenian, Olahraga, dan Rekreasi",
+      "divisions": [
+        {
+          "code": "90",
+          "name": "Aktivitas kreatif, kesenian, dan hiburan",
+          "keywords": [
+            "seni",
+            "teater",
+            "musik",
+            "pertunjukan",
+            "hiburan"
+          ]
+        },
+        {
+          "code": "91",
+          "name": "Perpustakaan, arsip, museum, dan kegiatan kebudayaan lainnya",
+          "keywords": [
+            "museum",
+            "arsip",
+            "perpustakaan",
+            "galeri",
+            "heritage"
+          ]
+        },
+        {
+          "code": "92",
+          "name": "Aktivitas perjudian dan pertaruhan",
+          "keywords": [
+            "judi",
+            "taruhan",
+            "casino",
+            "lotre",
+            "betting"
+          ]
+        },
+        {
+          "code": "93",
+          "name": "Aktivitas olahraga, hiburan, dan rekreasi",
+          "keywords": [
+            "olahraga",
+            "gym",
+            "rekreasi",
+            "arena",
+            "event sport"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "T",
+      "name": "Aktivitas Jasa Lainnya",
+      "divisions": [
+        {
+          "code": "94",
+          "name": "Aktivitas organisasi keanggotaan",
+          "keywords": [
+            "asosiasi",
+            "organisasi",
+            "perkumpulan",
+            "serikat",
+            "membership"
+          ]
+        },
+        {
+          "code": "95",
+          "name": "Reparasi komputer dan barang keperluan pribadi dan rumah tangga",
+          "keywords": [
+            "reparasi",
+            "service komputer",
+            "elektronik",
+            "perawatan",
+            "perbaikan"
+          ]
+        },
+        {
+          "code": "96",
+          "name": "Aktivitas jasa perorangan lainnya",
+          "keywords": [
+            "salon",
+            "laundry",
+            "jasa pribadi",
+            "pemakaman",
+            "kecantikan"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "U",
+      "name": "Aktivitas Rumah Tangga sebagai Pemberi Kerja dan Aktivitas Produksi Barang dan Jasa oleh Rumah Tangga untuk Keperluan Sendiri yang Tidak Terdiferensiasi",
+      "divisions": [
+        {
+          "code": "97",
+          "name": "Aktivitas rumah tangga sebagai pemberi kerja pekerja rumah tangga",
+          "keywords": [
+            "rumah tangga",
+            "pemberi kerja",
+            "PRT",
+            "domestik",
+            "asisten rumah"
+          ]
+        },
+        {
+          "code": "98",
+          "name": "Aktivitas produksi barang dan jasa oleh rumah tangga untuk keperluan sendiri yang tidak terdiferensiasi",
+          "keywords": [
+            "produksi sendiri",
+            "subsisten",
+            "rumah tangga",
+            "barang sendiri",
+            "jasa sendiri"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "V",
+      "name": "Aktivitas Badan Internasional dan Badan Ekstra Internasional Lainnya",
+      "divisions": [
+        {
+          "code": "99",
+          "name": "Aktivitas badan internasional dan badan ekstra internasional lainnya",
+          "keywords": [
+            "PBB",
+            "ASEAN",
+            "IMF",
+            "kedutaan",
+            "organisasi internasional"
+          ]
+        }
+      ]
+    }
+  ]
+}

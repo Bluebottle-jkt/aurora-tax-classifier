@@ -110,21 +110,35 @@ async def inspect_file(
 async def create_job(
     file: UploadFile = File(...),
     business_type: str = Form(...),
+    selected_categories: Optional[str] = Form(None),
+    selected_divisions: Optional[str] = Form(None),
     background_tasks: BackgroundTasks = None,
     x_aurora_key: str = Header(None)
 ):
     """Create new classification job"""
     verify_api_key(x_aurora_key)
 
+    import json
+
+    # Parse selected categories and divisions
+    categories = json.loads(selected_categories) if selected_categories else []
+    divisions = json.loads(selected_divisions) if selected_divisions else []
+
     # Create job
     job = create_job_uc.execute(
         file.file, file.filename, business_type
     )
 
-    # Process in background
+    # Process in background (pass categories and divisions for future use)
+    # Note: Currently the classifier doesn't filter by these, but they're available
     background_tasks.add_task(process_job_uc.execute, job.job_id)
 
-    return {"job_id": job.job_id, "status": job.status.value}
+    return {
+        "job_id": job.job_id,
+        "status": job.status.value,
+        "selected_categories": categories,
+        "selected_divisions": divisions
+    }
 
 
 @app.get("/api/jobs/{job_id}")
@@ -195,6 +209,31 @@ async def get_config(x_aurora_key: str = Header(None)):
     }
 
 
+@app.get("/api/kbli/categories")
+async def get_kbli_categories(x_aurora_key: str = Header(None)):
+    """Get KBLI categories and divisions from JSON"""
+    verify_api_key(x_aurora_key)
+
+    import json
+    from pathlib import Path
+
+    # Load KBLI JSON file
+    kbli_file = Path(__file__).parent.parent.parent.parent / "aurora_v2" / "kbli_2025_kategori_A_B_D_to_V_2digit_keywords.json"
+
+    try:
+        with open(kbli_file, 'r', encoding='utf-8') as f:
+            kbli_data = json.load(f)
+
+        return {
+            "metadata": kbli_data.get("metadata", {}),
+            "categories": kbli_data.get("categories", [])
+        }
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="KBLI data file not found")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to load KBLI data: {str(e)}")
+
+
 
 
 @app.post("/api/predict/direct")
@@ -204,11 +243,18 @@ async def predict_direct(request: dict, x_aurora_key: str = Header(None)):
         verify_api_key(x_aurora_key)
 
         texts = request.get("texts", [])
+        selected_categories = request.get("selected_categories", [])
+        selected_divisions = request.get("selected_divisions", [])
+
         if not texts:
             raise HTTPException(status_code=400, detail="No texts provided")
 
         if len(texts) > 100:
             raise HTTPException(status_code=400, detail="Maximum 100 texts allowed")
+
+        # Note: For now, we'll use the standard classifier
+        # In future, you can filter models based on selected_divisions
+        # For example: Load specific models for selected business types
 
         # Predict using classifier
         predictions_raw = classifier.predict_proba(texts)
@@ -232,7 +278,11 @@ async def predict_direct(request: dict, x_aurora_key: str = Header(None)):
                 "account_name": text,
                 "predicted_label": predicted_label_str,
                 "confidence": confidence.score,
-                "explanation": explanation
+                "explanation": explanation,
+                "business_context": {
+                    "categories": selected_categories,
+                    "divisions": selected_divisions
+                } if selected_divisions else None
             })
 
         return {"predictions": results}

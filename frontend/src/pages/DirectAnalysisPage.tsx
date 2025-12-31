@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../lib/axios';
 import { motion, AnimatePresence } from 'framer-motion';
+import KBLIBusinessSelector from '../components/KBLIBusinessSelector';
 
 interface AnalysisResult {
   account_name: string;
@@ -96,17 +97,26 @@ export default function DirectAnalysisPage() {
   const [inputMode, setInputMode] = useState<'single' | 'bulk'>('single');
   const [singleText, setSingleText] = useState('');
   const [bulkText, setBulkText] = useState('');
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedDivisions, setSelectedDivisions] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [singleResult, setSingleResult] = useState<AnalysisResult | null>(null);
   const [bulkResults, setBulkResults] = useState<AnalysisResult[]>([]);
 
+  const handleKBLISelectionChange = (categories: string[], divisions: string[]) => {
+    setSelectedCategories(categories);
+    setSelectedDivisions(divisions);
+  };
+
   const analyzeSingle = async () => {
-    if (!singleText.trim()) return;
+    if (!singleText.trim() || selectedDivisions.length === 0) return;
 
     setLoading(true);
     try {
       const response = await api.post('/api/predict/direct', {
         texts: [singleText],
+        selected_categories: selectedCategories,
+        selected_divisions: selectedDivisions,
       });
 
       setSingleResult(response.data.predictions[0]);
@@ -118,7 +128,7 @@ export default function DirectAnalysisPage() {
   };
 
   const analyzeBulk = async () => {
-    if (!bulkText.trim()) return;
+    if (!bulkText.trim() || selectedDivisions.length === 0) return;
 
     const lines = bulkText.split('\n').filter(line => line.trim()).slice(0, 100);
 
@@ -126,6 +136,8 @@ export default function DirectAnalysisPage() {
     try {
       const response = await api.post('/api/predict/direct', {
         texts: lines,
+        selected_categories: selectedCategories,
+        selected_divisions: selectedDivisions,
       });
 
       setBulkResults(response.data.predictions);
@@ -274,10 +286,27 @@ export default function DirectAnalysisPage() {
             </motion.div>
           </div>
 
+          {/* KBLI Business Type Selection */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white rounded-xl shadow-lg p-6 mb-8"
+          >
+            <h3 className="text-lg font-bold text-gray-800 mb-4">
+              Select Business Classification (KBLI 2025)
+            </h3>
+            <KBLIBusinessSelector
+              onSelectionChange={handleKBLISelectionChange}
+              selectedCategories={selectedCategories}
+              selectedDivisions={selectedDivisions}
+            />
+          </motion.div>
+
           {/* Input Mode Selector */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
             className="bg-white rounded-xl shadow-lg p-6 mb-8"
           >
             <div className="flex gap-4 mb-6">
@@ -334,9 +363,9 @@ export default function DirectAnalysisPage() {
                   </div>
                   <button
                     onClick={analyzeSingle}
-                    disabled={loading || !singleText.trim()}
+                    disabled={loading || !singleText.trim() || selectedDivisions.length === 0}
                     className={`w-full py-3 rounded-lg font-bold transition-all ${
-                      loading || !singleText.trim()
+                      loading || !singleText.trim() || selectedDivisions.length === 0
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                         : 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:shadow-lg'
                     }`}
@@ -346,6 +375,8 @@ export default function DirectAnalysisPage() {
                         <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
                         Analyzing...
                       </span>
+                    ) : selectedDivisions.length === 0 ? (
+                      '⚠️ Select Business Types First'
                     ) : (
                       '🔍 Analyze Transaction'
                     )}
@@ -373,9 +404,9 @@ export default function DirectAnalysisPage() {
                   </div>
                   <button
                     onClick={analyzeBulk}
-                    disabled={loading || !bulkText.trim()}
+                    disabled={loading || !bulkText.trim() || selectedDivisions.length === 0}
                     className={`w-full py-3 rounded-lg font-bold transition-all ${
-                      loading || !bulkText.trim()
+                      loading || !bulkText.trim() || selectedDivisions.length === 0
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                         : 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:shadow-lg'
                     }`}
@@ -385,6 +416,8 @@ export default function DirectAnalysisPage() {
                         <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
                         Analyzing {bulkText.split('\n').filter(l => l.trim()).length} transactions...
                       </span>
+                    ) : selectedDivisions.length === 0 ? (
+                      '⚠️ Select Business Types First'
                     ) : (
                       '🔍 Analyze All Transactions'
                     )}
