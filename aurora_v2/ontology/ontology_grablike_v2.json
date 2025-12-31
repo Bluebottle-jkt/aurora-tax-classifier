@@ -1,0 +1,804 @@
+{
+  "ontology_id": "aurora_v2_kbli_grablike_invoice_ontology_giant_2025-12-31",
+  "version": "2.2.0",
+  "language": "id",
+  "design_goal": "Invoice-line taxonomy from 'nama barang' only. Supports PPN Keluaran & Masukan, plus KBLI-based business type selection for Grab-like on-demand services.",
+  "generated_at": "2025-12-31T03:11:44.744564",
+  "facets": {
+    "tax_family": [
+      "PPN",
+      "PPNBM",
+      "PPh",
+      "OTHER"
+    ],
+    "vat_side": [
+      "output",
+      "input",
+      "reverse_charge",
+      "facility",
+      "unknown"
+    ],
+    "mechanism": [
+      "self_assessed",
+      "withholding",
+      "collector",
+      "reverse_charge",
+      "unknown"
+    ],
+    "finality": [
+      "creditable",
+      "final",
+      "non_final",
+      "mixed",
+      "unknown"
+    ],
+    "jurisdiction": [
+      "domestic",
+      "cross_border",
+      "unknown"
+    ],
+    "business_type_id": [
+      "BT_GRABLIKE_ONDEMAND_SUPERAPP",
+      "BT_ONDEMAND_MOBILITY_ONLY",
+      "BT_ONDEMAND_DELIVERY_ONLY",
+      "BT_PLATFORM_DIGITAL_ONLY"
+    ],
+    "service_domain": [
+      "transport_mobility",
+      "food_delivery",
+      "logistics_delivery",
+      "merchant_enablement",
+      "enterprise",
+      "advertising",
+      "devices_hardware",
+      "software_cloud",
+      "other"
+    ],
+    "pricing_model": [
+      "commission",
+      "management_fee",
+      "admin_fee",
+      "subscription_fee",
+      "service_fee",
+      "advertising_fee",
+      "device_sale",
+      "other"
+    ],
+    "evidence_strength": [
+      "high",
+      "medium",
+      "low"
+    ]
+  },
+  "business_type_catalog": [
+    {
+      "business_type_id": "BT_GRABLIKE_ONDEMAND_SUPERAPP",
+      "label": "On-demand Superapp (mobility + food + delivery) - Grab-like",
+      "kbli_candidates": [
+        {
+          "kbli": "49424",
+          "label": "Angkutan Ojek Motor"
+        },
+        {
+          "kbli": "49426",
+          "label": "Angkutan Sewa Khusus"
+        },
+        {
+          "kbli": "53201",
+          "label": "Aktivitas Kurir"
+        },
+        {
+          "kbli": "63122",
+          "label": "Portal Web/Platform Digital Komersial"
+        },
+        {
+          "kbli": "6311",
+          "label": "Pengolahan data/hosting/penyediaan layanan aplikasi"
+        }
+      ],
+      "notes": "Gunakan bila WP menjalankan model platform on-demand (transport + delivery) dan monetisasi lewat fee/komisi/iklan/layanan enterprise."
+    },
+    {
+      "business_type_id": "BT_ONDEMAND_MOBILITY_ONLY",
+      "label": "On-demand Mobility Only (ojek/ride-hailing)",
+      "kbli_candidates": [
+        {
+          "kbli": "49424",
+          "label": "Angkutan Ojek Motor"
+        },
+        {
+          "kbli": "49426",
+          "label": "Angkutan Sewa Khusus"
+        }
+      ]
+    },
+    {
+      "business_type_id": "BT_ONDEMAND_DELIVERY_ONLY",
+      "label": "On-demand Delivery/Logistics Only (kurir/parcel)",
+      "kbli_candidates": [
+        {
+          "kbli": "53201",
+          "label": "Aktivitas Kurir"
+        },
+        {
+          "kbli": "53202",
+          "label": "Aktivitas Agen Kurir"
+        }
+      ]
+    },
+    {
+      "business_type_id": "BT_PLATFORM_DIGITAL_ONLY",
+      "label": "Digital Platform Only (portal/platform komersial)",
+      "kbli_candidates": [
+        {
+          "kbli": "63122",
+          "label": "Portal Web/Platform Digital Komersial"
+        },
+        {
+          "kbli": "6311",
+          "label": "Pengolahan data/hosting/penyediaan layanan aplikasi"
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "TAX",
+      "type": "root",
+      "label": "Tax"
+    },
+    {
+      "id": "PPN",
+      "type": "tax_family",
+      "label": "PPN",
+      "parent": "TAX"
+    },
+    {
+      "id": "PPNBM",
+      "type": "tax_family",
+      "label": "PPnBM",
+      "parent": "TAX"
+    },
+    {
+      "id": "PPh",
+      "type": "tax_family",
+      "label": "PPh",
+      "parent": "TAX"
+    },
+    {
+      "id": "PPN_OUTPUT",
+      "type": "vat_side_root",
+      "label": "PPN Keluaran (Faktur Pajak Keluaran)",
+      "parent": "PPN",
+      "facets": {
+        "tax_family": "PPN",
+        "vat_side": "output",
+        "finality": "creditable",
+        "jurisdiction": "domestic",
+        "mechanism": "self_assessed"
+      }
+    },
+    {
+      "id": "PPN_OUTPUT_REV",
+      "type": "domain_root",
+      "label": "Revenue Objects (Invoice Lines)",
+      "parent": "PPN_OUTPUT"
+    },
+    {
+      "id": "REV_PLATFORM",
+      "type": "domain",
+      "label": "Platform Enablement Fees",
+      "parent": "PPN_OUTPUT_REV",
+      "facets": {
+        "service_domain": "merchant_enablement"
+      }
+    },
+    {
+      "id": "REV_MGMT_FEE",
+      "type": "object_group",
+      "label": "Management Fee (Mgmt Fee)",
+      "parent": "REV_PLATFORM",
+      "facets": {
+        "pricing_model": "management_fee"
+      },
+      "crosswalk": {
+        "synonyms": [
+          "management fee",
+          "mgmt fee"
+        ]
+      }
+    },
+    {
+      "id": "REV_MGMT_FEE_CORE",
+      "type": "object",
+      "label": "Management Fee - Core Platform",
+      "parent": "REV_MGMT_FEE",
+      "facets": {
+        "service_domain": "other",
+        "evidence_strength": "medium"
+      },
+      "crosswalk": {
+        "patterns": [
+          "(?i)\\bmanagement fee\\b(?!.*food)(?!.*car)(?!.*express)(?!.*marketing)(?!.*perjalanan)(?!.*pemesanan)"
+        ]
+      }
+    },
+    {
+      "id": "REV_MGMT_FEE_FOOD",
+      "type": "object",
+      "label": "Management Fee - Food Delivery / Merchant Food",
+      "parent": "REV_MGMT_FEE",
+      "facets": {
+        "service_domain": "food_delivery",
+        "evidence_strength": "high"
+      },
+      "crosswalk": {
+        "patterns": [
+          "(?i)management fee.*\\bfood\\b",
+          "(?i)grabfood",
+          "(?i)apasihfood"
+        ]
+      }
+    },
+    {
+      "id": "REV_MGMT_FEE_MOBILITY",
+      "type": "object",
+      "label": "Management Fee - Mobility",
+      "parent": "REV_MGMT_FEE",
+      "facets": {
+        "service_domain": "transport_mobility",
+        "evidence_strength": "high"
+      },
+      "crosswalk": {
+        "patterns": [
+          "(?i)apasihcar",
+          "(?i)management fee.*\\b(car|taxi|bike|mobility)\\b"
+        ]
+      }
+    },
+    {
+      "id": "REV_MGMT_FEE_LOGISTICS",
+      "type": "object",
+      "label": "Management Fee - Logistics/Express",
+      "parent": "REV_MGMT_FEE",
+      "facets": {
+        "service_domain": "logistics_delivery",
+        "evidence_strength": "high"
+      },
+      "crosswalk": {
+        "patterns": [
+          "(?i)apasih(express|expres)",
+          "(?i)management fee.*\\b(express|delivery|kurir|parcel|logistic)\\b"
+        ]
+      }
+    },
+    {
+      "id": "REV_MGMT_FEE_TRAVEL",
+      "type": "object",
+      "label": "Management Fee - Perjalanan/Travel",
+      "parent": "REV_MGMT_FEE",
+      "facets": {
+        "service_domain": "enterprise",
+        "evidence_strength": "high"
+      },
+      "crosswalk": {
+        "patterns": [
+          "(?i)management fee.*biaya perjalanan",
+          "(?i)biaya perjalanan"
+        ]
+      }
+    },
+    {
+      "id": "REV_MGMT_FEE_ORDERING",
+      "type": "object",
+      "label": "Management Fee - Pemesanan/Booking",
+      "parent": "REV_MGMT_FEE",
+      "facets": {
+        "service_domain": "enterprise",
+        "evidence_strength": "high"
+      },
+      "crosswalk": {
+        "patterns": [
+          "(?i)management fee.*biaya pemesanan",
+          "(?i)biaya pemesanan",
+          "(?i)booking fee",
+          "(?i)order fee"
+        ]
+      }
+    },
+    {
+      "id": "REV_ADMIN_FEE",
+      "type": "object_group",
+      "label": "Admin Fee / Administrative Charges",
+      "parent": "REV_PLATFORM",
+      "facets": {
+        "pricing_model": "admin_fee"
+      },
+      "crosswalk": {
+        "synonyms": [
+          "admin fee",
+          "administration fee",
+          "biaya admin"
+        ]
+      }
+    },
+    {
+      "id": "REV_ADMIN_FEE_GDP",
+      "type": "object",
+      "label": "Admin Fee - GDP",
+      "parent": "REV_ADMIN_FEE",
+      "facets": {
+        "service_domain": "enterprise",
+        "evidence_strength": "high"
+      },
+      "crosswalk": {
+        "patterns": [
+          "(?i)^gdp\\s*-\\s*admin fee"
+        ]
+      }
+    },
+    {
+      "id": "REV_SERVICE_FEE",
+      "type": "object_group",
+      "label": "Service Fee (Biaya Jasa)",
+      "parent": "REV_PLATFORM",
+      "facets": {
+        "pricing_model": "service_fee"
+      },
+      "crosswalk": {
+        "synonyms": [
+          "biaya jasa",
+          "service fee",
+          "fee jasa"
+        ]
+      }
+    },
+    {
+      "id": "REV_SERVICE_FEE_PERIODIC",
+      "type": "object",
+      "label": "Biaya Jasa - Periodic/Periode",
+      "parent": "REV_SERVICE_FEE",
+      "facets": {
+        "service_domain": "merchant_enablement",
+        "evidence_strength": "high"
+      },
+      "crosswalk": {
+        "patterns": [
+          "(?i)biaya jasa.*periode"
+        ]
+      }
+    },
+    {
+      "id": "REV_ADS",
+      "type": "domain",
+      "label": "Advertising & Marketing Services",
+      "parent": "PPN_OUTPUT_REV",
+      "facets": {
+        "service_domain": "advertising",
+        "pricing_model": "advertising_fee"
+      }
+    },
+    {
+      "id": "REV_ADS_MARKETING_SERVICES",
+      "type": "object",
+      "label": "Marketing Services (Monthly)",
+      "parent": "REV_ADS",
+      "facets": {
+        "evidence_strength": "high"
+      },
+      "crosswalk": {
+        "patterns": [
+          "(?i)marketing services"
+        ]
+      }
+    },
+    {
+      "id": "REV_ADS_CAR_WRAPS",
+      "type": "object",
+      "label": "OOH/Car Wraps/Vehicle Branding",
+      "parent": "REV_ADS",
+      "facets": {
+        "evidence_strength": "high"
+      },
+      "crosswalk": {
+        "patterns": [
+          "(?i)car wraps",
+          "(?i)back window",
+          "(?i)stickearn"
+        ]
+      }
+    },
+    {
+      "id": "REV_ADS_PROGRAM_ANNUAL_FEE",
+      "type": "object",
+      "label": "Program/Annual Fee (Ads program)",
+      "parent": "REV_ADS",
+      "facets": {
+        "evidence_strength": "medium"
+      },
+      "crosswalk": {
+        "patterns": [
+          "(?i)annual fee",
+          "(?i)program\\s*-\\s*annual fee",
+          "(?i)supreme program"
+        ]
+      }
+    },
+    {
+      "id": "REV_DEVICES",
+      "type": "domain",
+      "label": "Device/Hardware Sales",
+      "parent": "PPN_OUTPUT_REV",
+      "facets": {
+        "service_domain": "devices_hardware",
+        "pricing_model": "device_sale"
+      }
+    },
+    {
+      "id": "REV_DEV_LAPTOP",
+      "type": "object_group",
+      "label": "Laptop Sales",
+      "parent": "REV_DEVICES"
+    },
+    {
+      "id": "REV_DEV_LAPTOP_DELL",
+      "type": "object",
+      "label": "Laptop - Dell",
+      "parent": "REV_DEV_LAPTOP",
+      "facets": {
+        "evidence_strength": "high"
+      },
+      "crosswalk": {
+        "patterns": [
+          "(?i)^laptop\\s*-\\s*dell"
+        ]
+      }
+    },
+    {
+      "id": "REV_DEV_LAPTOP_APPLE",
+      "type": "object",
+      "label": "Laptop - Apple MacBook",
+      "parent": "REV_DEV_LAPTOP",
+      "facets": {
+        "evidence_strength": "high"
+      },
+      "crosswalk": {
+        "patterns": [
+          "(?i)macbook",
+          "(?i)apple\\s+macbook"
+        ]
+      }
+    },
+    {
+      "id": "PPN_INPUT",
+      "type": "vat_side_root",
+      "label": "PPN Masukan (Faktur Pajak Masukan)",
+      "parent": "PPN",
+      "facets": {
+        "tax_family": "PPN",
+        "vat_side": "input",
+        "finality": "creditable",
+        "jurisdiction": "domestic",
+        "mechanism": "self_assessed"
+      }
+    },
+    {
+      "id": "PPN_INPUT_COST",
+      "type": "domain_root",
+      "label": "Cost Objects (Purchases via Invoice Lines)",
+      "parent": "PPN_INPUT"
+    },
+    {
+      "id": "COST_PLATFORM_IT",
+      "type": "domain",
+      "label": "Platform/IT/Cloud Costs",
+      "parent": "PPN_INPUT_COST",
+      "facets": {
+        "service_domain": "software_cloud"
+      }
+    },
+    {
+      "id": "COST_MARKETING_ADS",
+      "type": "domain",
+      "label": "Marketing/Advertising Costs",
+      "parent": "PPN_INPUT_COST",
+      "facets": {
+        "service_domain": "advertising"
+      }
+    },
+    {
+      "id": "COST_LOGISTICS_OPS",
+      "type": "domain",
+      "label": "Logistics & Delivery Ops Costs",
+      "parent": "PPN_INPUT_COST",
+      "facets": {
+        "service_domain": "logistics_delivery"
+      }
+    },
+    {
+      "id": "COST_MOBILITY_OPS",
+      "type": "domain",
+      "label": "Mobility Ops Costs",
+      "parent": "PPN_INPUT_COST",
+      "facets": {
+        "service_domain": "transport_mobility"
+      }
+    },
+    {
+      "id": "COST_FOOD_OPS",
+      "type": "domain",
+      "label": "Food Delivery Ops Costs",
+      "parent": "PPN_INPUT_COST",
+      "facets": {
+        "service_domain": "food_delivery"
+      }
+    },
+    {
+      "id": "COST_DEVICES",
+      "type": "domain",
+      "label": "Devices/Hardware Purchases",
+      "parent": "PPN_INPUT_COST",
+      "facets": {
+        "service_domain": "devices_hardware"
+      }
+    },
+    {
+      "id": "COST_GENERAL",
+      "type": "domain",
+      "label": "General & Admin Purchases",
+      "parent": "PPN_INPUT_COST",
+      "facets": {
+        "service_domain": "other"
+      }
+    },
+    {
+      "id": "COST_ADS_CAR_WRAPS",
+      "type": "object",
+      "label": "Marketing Cost - Car Wraps/Branding",
+      "parent": "COST_MARKETING_ADS",
+      "facets": {
+        "pricing_model": "advertising_fee",
+        "evidence_strength": "high"
+      },
+      "crosswalk": {
+        "patterns": [
+          "(?i)car wraps",
+          "(?i)stickearn",
+          "(?i)vehicle branding"
+        ]
+      }
+    },
+    {
+      "id": "COST_DEV_LAPTOP",
+      "type": "object",
+      "label": "Device Cost - Laptop",
+      "parent": "COST_DEVICES",
+      "facets": {
+        "pricing_model": "device_sale",
+        "evidence_strength": "high"
+      },
+      "crosswalk": {
+        "patterns": [
+          "(?i)laptop",
+          "(?i)macbook"
+        ]
+      }
+    },
+    {
+      "id": "PPN_REVERSE_CHARGE",
+      "type": "vat_side_root",
+      "label": "PPN Reverse Charge (Pemanfaatan JKP/BKP Tak Berwujud LN)",
+      "parent": "PPN",
+      "facets": {
+        "vat_side": "reverse_charge",
+        "mechanism": "reverse_charge",
+        "jurisdiction": "cross_border",
+        "finality": "creditable"
+      }
+    },
+    {
+      "id": "PPN_FACILITY",
+      "type": "vat_side_root",
+      "label": "Fasilitas PPN (DTP/Tidak Dipungut/Dibebaskan)",
+      "parent": "PPN",
+      "facets": {
+        "vat_side": "facility",
+        "finality": "mixed",
+        "jurisdiction": "mixed"
+      }
+    }
+  ],
+  "leaf_generator": {
+    "purpose": "Auto-extend leaf nodes from invoice line text ('nama barang') for both OUTPUT and INPUT VAT datasets.",
+    "naming_policy": {
+      "leaf_id_format": "<SIDE>_<ROLE>_<DOMAIN>_<PRICINGMODEL>_<KEY>[_<BRAND_OR_VENDOR>]",
+      "sanitize": "UPPER_SNAKE_CASE_ASCII_MAX80"
+    },
+    "rules": [
+      {
+        "id": "LG_REV_MGMT_FEE",
+        "scope": "output",
+        "if_text_matches": "(?i)\\bmanagement fee\\b",
+        "then_assign_parent_candidates": [
+          {
+            "parent": "REV_MGMT_FEE_FOOD",
+            "if_contains_any": [
+              "food",
+              "grabfood",
+              "apasihfood"
+            ]
+          },
+          {
+            "parent": "REV_MGMT_FEE_MOBILITY",
+            "if_contains_any": [
+              "car",
+              "taxi",
+              "bike",
+              "mobility",
+              "apasihcar"
+            ]
+          },
+          {
+            "parent": "REV_MGMT_FEE_LOGISTICS",
+            "if_contains_any": [
+              "express",
+              "delivery",
+              "kurir",
+              "parcel",
+              "logistic",
+              "apasih"
+            ]
+          },
+          {
+            "parent": "REV_MGMT_FEE_TRAVEL",
+            "if_contains_any": [
+              "perjalanan",
+              "travel"
+            ]
+          },
+          {
+            "parent": "REV_MGMT_FEE_ORDERING",
+            "if_contains_any": [
+              "pemesanan",
+              "booking",
+              "order"
+            ]
+          }
+        ],
+        "default_parent": "REV_MGMT_FEE_CORE",
+        "then_propose_leaf": {
+          "pricing_model": "management_fee",
+          "key_extraction": "extract_vendor_tokens_and_product_tokens_excluding_dates",
+          "store_examples": 5
+        }
+      },
+      {
+        "id": "LG_REV_ADMIN_FEE",
+        "scope": "output",
+        "if_text_matches": "(?i)\\badmin fee\\b|\\bbiaya admin\\b|^gdp\\s*-\\s*admin fee",
+        "then_assign_parent": "REV_ADMIN_FEE",
+        "then_propose_leaf": {
+          "pricing_model": "admin_fee",
+          "key_extraction": "extract_prefix_and_month_tokens",
+          "store_examples": 5
+        }
+      },
+      {
+        "id": "LG_REV_SERVICE_FEE",
+        "scope": "output",
+        "if_text_matches": "(?i)biaya jasa",
+        "then_assign_parent": "REV_SERVICE_FEE",
+        "then_propose_leaf": {
+          "pricing_model": "service_fee",
+          "key_extraction": "extract_counterparty_phrase_after_biaya_jasa",
+          "store_examples": 5
+        }
+      },
+      {
+        "id": "LG_REV_ADS",
+        "scope": "output",
+        "if_text_matches": "(?i)car wraps|stickearn|marketing services|campaign|placement|annual fee|program|supreme program",
+        "then_assign_parent": "REV_ADS",
+        "then_propose_leaf": {
+          "pricing_model": "advertising_fee",
+          "key_extraction": "extract_campaign_or_vendor_tokens",
+          "store_examples": 5
+        }
+      },
+      {
+        "id": "LG_REV_DEVICE",
+        "scope": "output",
+        "if_text_matches": "(?i)^laptop\\s*-\\s*|macbook|device",
+        "then_assign_parent": "REV_DEV_LAPTOP",
+        "then_propose_leaf": {
+          "pricing_model": "device_sale",
+          "key_extraction": "extract_brand_model",
+          "store_examples": 5
+        }
+      },
+      {
+        "id": "LG_COST_IT_SOFTWARE",
+        "scope": "input",
+        "if_text_matches": "(?i)subscription|license|saas|cloud|hosting|server|domain|api|platform|aws|gcp|azure",
+        "then_assign_parent": "COST_PLATFORM_IT",
+        "then_propose_leaf": {
+          "pricing_model": "subscription_fee",
+          "key_extraction": "extract_product_vendor_tokens",
+          "store_examples": 5
+        }
+      },
+      {
+        "id": "LG_COST_ADS_MARKETING",
+        "scope": "input",
+        "if_text_matches": "(?i)marketing|iklan|ads|campaign|car wraps|branding|placement|promosi|event",
+        "then_assign_parent": "COST_MARKETING_ADS",
+        "then_propose_leaf": {
+          "pricing_model": "advertising_fee",
+          "key_extraction": "extract_vendor_campaign_tokens",
+          "store_examples": 5
+        }
+      },
+      {
+        "id": "LG_COST_DEVICE",
+        "scope": "input",
+        "if_text_matches": "(?i)laptop|macbook|printer|router|handphone|device|hardware",
+        "then_assign_parent": "COST_DEVICES",
+        "then_propose_leaf": {
+          "pricing_model": "device_sale",
+          "key_extraction": "extract_brand_model",
+          "store_examples": 5
+        }
+      },
+      {
+        "id": "LG_COST_OPS_MOBILITY",
+        "scope": "input",
+        "if_text_matches": "(?i)bensin|bbm|sparepart|ban|oli|service kendaraan|maintenance kendaraan|helm|jaket",
+        "then_assign_parent": "COST_MOBILITY_OPS",
+        "then_propose_leaf": {
+          "pricing_model": "service_fee",
+          "key_extraction": "extract_ops_item_tokens",
+          "store_examples": 5
+        }
+      },
+      {
+        "id": "LG_COST_OPS_LOGISTICS",
+        "scope": "input",
+        "if_text_matches": "(?i)packaging|karton|bubble wrap|parcel|delivery|kurir|warehouse|gudang",
+        "then_assign_parent": "COST_LOGISTICS_OPS",
+        "then_propose_leaf": {
+          "pricing_model": "service_fee",
+          "key_extraction": "extract_ops_item_tokens",
+          "store_examples": 5
+        }
+      },
+      {
+        "id": "LG_COST_GENERAL",
+        "scope": "input",
+        "if_text_matches": "(?i)admin fee|jasa|fee|konsultan|legal|notaris|audit|training|sewa|office|stationery",
+        "then_assign_parent": "COST_GENERAL",
+        "then_propose_leaf": {
+          "pricing_model": "other",
+          "key_extraction": "extract_service_tokens",
+          "store_examples": 5
+        }
+      }
+    ]
+  },
+  "output_contract": {
+    "must_return_fields": [
+      "invoice_side",
+      "primary_label_id",
+      "ancestor_path",
+      "facets_resolved",
+      "confidence_0_100",
+      "evidence_terms"
+    ],
+    "optional_fields": [
+      "suggested_new_leaf_node",
+      "leaf_generator_rule_id",
+      "cluster_id",
+      "notes"
+    ],
+    "label_selection_policy": "Choose deepest node possible. Preserve hierarchy. No duplicates. Merge semantically identical leaves."
+  }
+}
